@@ -38,17 +38,24 @@ app.use((req, res) => {
 app.use(errorHandler);
 
 // ─── Start Server ──────────────────────────────────────────
-const server = app.listen(env.PORT, () => {
-  logger.info(`🚀 Server running on port ${env.PORT} [${env.NODE_ENV}]`);
-});
+let server;
+if (env.NODE_ENV !== 'test') {
+  server = app.listen(env.PORT, () => {
+    logger.info(`🚀 Server running on port ${env.PORT} [${env.NODE_ENV}]`);
+  });
+}
 
 // ─── Graceful Shutdown ─────────────────────────────────────
 function shutdown(signal) {
   logger.info(`${signal} received. Shutting down gracefully...`);
-  server.close(() => {
-    logger.info('Server closed.');
+  if (server) {
+    server.close(() => {
+      logger.info('Server closed.');
+      process.exit(0);
+    });
+  } else {
     process.exit(0);
-  });
+  }
 }
 
 process.on('SIGTERM', () => shutdown('SIGTERM'));

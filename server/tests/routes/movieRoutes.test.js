@@ -1,4 +1,4 @@
-
+const { describe, it, expect, vi, beforeEach } = require('vitest');
 const request = require('supertest');
 
 // Mock environment to avoid requiring real TMDB key in tests
