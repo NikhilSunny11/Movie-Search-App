@@ -1,14 +1,5 @@
-const { describe, it, expect, vi, beforeEach } = require('vitest');
-const request = require('supertest');
 
-// Mock the TMDB service before importing the app
-vi.mock('../../src/services/tmdbService', () => ({
-  searchMovies: vi.fn(),
-  getTrending: vi.fn(),
-  getMovieDetails: vi.fn(),
-  getGenres: vi.fn(),
-  discoverByGenre: vi.fn(),
-}));
+const request = require('supertest');
 
 // Mock environment to avoid requiring real TMDB key in tests
 vi.mock('../../src/config/env', () => ({
@@ -21,6 +12,12 @@ vi.mock('../../src/config/env', () => ({
 
 const app = require('../../src/server');
 const tmdbService = require('../../src/services/tmdbService');
+
+vi.spyOn(tmdbService, 'searchMedia');
+vi.spyOn(tmdbService, 'getTrending');
+vi.spyOn(tmdbService, 'getDetails');
+vi.spyOn(tmdbService, 'getGenres');
+vi.spyOn(tmdbService, 'discoverByGenre');
 
 describe('Movie API Routes', () => {
   beforeEach(() => {
@@ -47,7 +44,7 @@ describe('Movie API Routes', () => {
     });
 
     it('should return search results', async () => {
-      tmdbService.searchMovies.mockResolvedValue({
+      tmdbService.searchMedia.mockResolvedValue({
         results: [{ id: 1, title: 'Inception' }],
         meta: { page: 1, totalPages: 1, totalResults: 1 },
       });
@@ -97,7 +94,7 @@ describe('Movie API Routes', () => {
     });
 
     it('should return movie details', async () => {
-      tmdbService.getMovieDetails.mockResolvedValue({
+      tmdbService.getDetails.mockResolvedValue({
         id: 550,
         title: 'Fight Club',
         overview: 'An insomniac office worker...',
