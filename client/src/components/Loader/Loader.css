@@ -1,0 +1,58 @@
+.loader {
+  padding: 1rem 0 3rem;
+}
+
+.loader__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.loader__card {
+  border-radius: var(--radius-lg, 1rem);
+  overflow: hidden;
+  background: var(--color-surface, #13131a);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loader__poster {
+  aspect-ratio: 2 / 3;
+  width: 100%;
+}
+
+.loader__info {
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.loader__title {
+  height: 14px;
+  border-radius: 4px;
+  width: 80%;
+}
+
+.loader__year {
+  height: 12px;
+  border-radius: 4px;
+  width: 40%;
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface, #13131a) 25%,
+    var(--color-surface-hover, #1c1c27) 50%,
+    var(--color-surface, #13131a) 75%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 640px) {
+  .loader__grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+}

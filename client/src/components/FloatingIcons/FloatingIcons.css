@@ -1,0 +1,42 @@
+.floating-icons-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1; /* Behind everything */
+}
+
+.floating-icon {
+  position: absolute;
+  top: -100px;
+  left: var(--left);
+  width: var(--size);
+  height: var(--size);
+  color: var(--color-primary); /* Burgundy */
+  opacity: 0.15; /* Subtle */
+  animation: floatDown var(--duration) linear infinite;
+  animation-delay: var(--delay);
+  transform-origin: center;
+}
+
+.floating-icon svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(var(--rotation));
+  /* Make sure stroke colors correctly map to currentColor */
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+@keyframes floatDown {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(calc(100vh + 200px)) rotate(360deg);
+  }
+}
